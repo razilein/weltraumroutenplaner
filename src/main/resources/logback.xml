@@ -22,6 +22,6 @@
         <appender-ref ref="R" />
     </root>
   
-    <logger name="de" level="info"/>
+    <logger name="de" level="info" />
 
 </configuration>
