@@ -22,7 +22,7 @@ public class Start {
             final int ziel = readEingabe(br, graphs, "Zielplaneten");
 
             log.info("Bitte haben Sie einen Moment Geduld. Die schnellste Route wird berechnet.");
-            final Route route = new BerechneRouteService().findeKuerzesteRoute(graphs, start, ziel);
+            final Route route = new BerechneRouteService(graphs.getEdges(), start, ziel).findeKuerzesteRoute();
             ZeigeRouteUtils.anzeigen(start, route, graphs.getNodes());
         } catch (final IOException e) {
             log.error("Die Route kann nicht berechnet werden! Sie sind auf sich selbst angewiesen! Viel Glück! ", e.getMessage(), e);

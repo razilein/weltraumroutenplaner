@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import de.sg.model.Edge;
-import de.sg.model.Graph;
 import de.sg.model.Route;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,20 +16,25 @@ public class BerechneRouteService {
 
     final List<Route> routen;
 
-    public BerechneRouteService() {
-        routen = new ArrayList<>();
+    private final List<Edge> edges;
+
+    private final int start;
+
+    private final int ziel;
+
+    public BerechneRouteService(final List<Edge> edges, final int start, final int ziel) {
+        this.start = start;
+        this.ziel = ziel;
+        this.edges = edges;
+        this.routen = new ArrayList<>();
     }
 
-    public Route findeKuerzesteRoute(final Graph graph, final int start, final int ziel) {
-        berechneRouten(graph.getEdges(), start, ziel);
+    public Route findeKuerzesteRoute() {
+        berechneRouten(new ArrayList<>(), start);
         return findeKuerzesteRoute(routen);
     }
 
-    private void berechneRouten(final List<Edge> edges, final int start, final int ziel) {
-        berechneRouten(edges, new ArrayList<>(), start, ziel);
-    }
-
-    private void berechneRouten(final List<Edge> edges, final List<Edge> aktuelleRoute, final int index, final int ziel) {
+    private void berechneRouten(final List<Edge> aktuelleRoute, final int index) {
         final List<Edge> nextEdges = edges.stream().filter(edge -> checkIsAllowedEdge(aktuelleRoute, index, edge))
                 .collect(Collectors.toList());
 
@@ -49,7 +53,7 @@ public class BerechneRouteService {
 
                 final int nextIndex = nextEdge.getTarget() == index ? nextEdge.getSource() : nextEdge.getTarget();
                 log.debug("Neuer Knotenpunkt gefunden. Von '{}' nach '{}'", index, nextIndex);
-                berechneRouten(edges, newRoute, nextIndex, ziel);
+                berechneRouten(newRoute, nextIndex);
             }
         }
     }
