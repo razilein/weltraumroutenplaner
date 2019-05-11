@@ -14,11 +14,11 @@ public class ZeigeRouteUtils {
 
     public static void anzeigen(final int start, final Route route, final List<Node> nodes) {
         log.info("Folgende Route wurde ermittelt: ");
-        final int index = start;
+        int index = start;
         for (final Edge edge : route.getEdges()) {
             final int from = edge.getSource() == index ? edge.getSource() : edge.getTarget();
             final int to = edge.getSource() == index ? edge.getTarget() : edge.getSource();
-
+            index = to;
             log.info("{} -> {} (Entfernung: {})", nodes.get(from).getLabel(), nodes.get(to).getLabel(), edge.getCost());
         }
         log.debug("Gesamte Entfernung: {}", route.getSumCost());
