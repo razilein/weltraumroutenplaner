@@ -21,7 +21,7 @@ public class ZeigeRouteUtils {
             index = to;
             log.info("{} -> {} (Entfernung: {})", nodes.get(from).getLabel(), nodes.get(to).getLabel(), edge.getCost());
         }
-        log.debug("Gesamte Entfernung: {}", route.getSumCost());
+        log.info("Gesamte Entfernung: {}", route.getSumCost());
     }
 
 }
