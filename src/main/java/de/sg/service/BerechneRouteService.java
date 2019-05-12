@@ -38,7 +38,8 @@ public class BerechneRouteService {
         final List<Edge> nextEdges = edges.stream().filter(edge -> checkIsAllowedEdge(aktuelleRoute, index, edge))
                 .collect(Collectors.toList());
 
-        final Optional<Edge> destinationEdge = nextEdges.stream().filter(edge -> edge.getTarget() == ziel).findFirst();
+        final Optional<Edge> destinationEdge = nextEdges.stream().filter(edge -> edge.getTarget() == ziel || edge.getSource() == ziel)
+                .findFirst();
         if (destinationEdge.isPresent()) {
             log.debug("Zielroute nach '{}' gefunden.", ziel);
             final List<Edge> newRoute = new ArrayList<>();
